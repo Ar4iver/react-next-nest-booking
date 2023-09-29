@@ -1,34 +1,32 @@
-'use strict';
-
+const { getCottageImages } = require('../src/utils/imageService.ts');
+('use strict');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert(
-      'Cottages',
-      [...Array(100)].map(() => ({
-        price: 100,
-        name: 'Ivan',
-        description: 'Some description',
-        images: JSON.stringify(
-          [...Array(5)].map(() => `https://someUrlImage.ru`),
-        ),
-        amenities: JSON.stringify(
-          [...Array(5)].map((index) => `some amenities ${index}`),
-        ),
-        maxGuests: 5,
-        numberOfBedrooms: 3,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })),
+    const cottageNames = ['WhiteHouse', 'BrownHouse', 'BordoHouse'];
+    const data = await Promise.all(
+      cottageNames.map(async (name, index) => {
+        return {
+          price: (index + 1) * 100,
+          name: `${name.split(/(?=[A-Z])/).join(' ')} House`,
+          description: 'Some description',
+          images: await getCottageImages(name),
+          amenities: JSON.stringify([
+            'Wi-Fi',
+            'Кондиционер',
+            'Телевизор',
+            'Кухня',
+          ]),
+          maxGuests: 7,
+          numberOfBedrooms: 2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+      }),
     );
+
+    return queryInterface.bulkInsert('Cottages', data);
   },
 
-  async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  },
+  async down(queryInterface, Sequelize) {},
 };
