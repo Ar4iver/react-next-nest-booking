@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       description: {
-        type: Sequelize.STRING(2048),
+        type: Sequelize.STRING,
       },
       numberOfBedrooms: {
         type: Sequelize.INTEGER,
@@ -24,11 +24,16 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER,
       },
+
+      rate: {
+        type: Sequelize.INTEGER,
+      },
+
       images: {
-        type: Sequelize.STRING(2048),
+        type: Sequelize.JSON,
       },
       amenities: {
-        type: Sequelize.STRING,
+        type: Sequelize.JSON,
       },
       createdAt: {
         allowNull: false,

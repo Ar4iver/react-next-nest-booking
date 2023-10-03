@@ -1,0 +1,41 @@
+[
+  {
+    "name": "BordoHouse",
+    "description": "Lorem ipsum dolor sit amet",
+    "numberOfBedrooms": 10,
+    "maxGuests": 7,
+    "price": 2545,
+    "rate": 0,
+    "images": [
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1584132905271-512c958d674a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    ],
+    "amenities": []
+  },
+  {
+    "name": "WhiteHouse",
+    "description": "Lorem ipsum dolor sit amet",
+    "numberOfBedrooms": 6,
+    "maxGuests": 7,
+    "price": 4564,
+    "rate": 0,
+    "images": [
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1584132905271-512c958d674a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    ],
+    "amenities": []
+  },
+  {
+    "name": "BrownHouse",
+    "description": "Lorem ipsum dolor sit amet",
+    "numberOfBedrooms": 5,
+    "maxGuests": 7,
+    "price": 565,
+    "rate": 0,
+    "images": [
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+      "https://images.unsplash.com/photo-1584132905271-512c958d674a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    ],
+    "amenities": []
+  }
+]

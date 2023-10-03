@@ -12,6 +12,9 @@ export class Cottages extends Model {
   numberOfBedrooms: number;
 
   @Column
+  rate: number;
+
+  @Column
   maxGuests: number;
 
   @Column({ defaultValue: 0 })
