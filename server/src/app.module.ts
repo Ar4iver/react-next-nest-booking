@@ -6,6 +6,7 @@ import { SequalizeConfigService } from './config/sequelizeConfig.service';
 import { databaseConfig } from './config/configuration';
 import { AuthModule } from './auth/auth.module';
 import { CottagesModule } from './cottages/cottages.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CottagesModule } from './cottages/cottages.module';
     UsersModule,
     AuthModule,
     CottagesModule,
+    ImagesModule,
   ],
 })
 export class AppModule {}

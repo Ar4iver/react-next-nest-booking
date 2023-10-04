@@ -19,10 +19,4 @@ export class Cottages extends Model {
 
   @Column({ defaultValue: 0 })
   price: number;
-
-  @Column
-  images: string;
-
-  @Column
-  amenities: string;
 }

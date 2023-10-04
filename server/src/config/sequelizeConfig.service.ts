@@ -4,6 +4,8 @@ import {
   SequelizeModuleOptions,
   SequelizeOptionsFactory,
 } from '@nestjs/sequelize';
+import { Cottages } from 'src/cottages/cottages.model';
+import { Images } from 'src/images/images.model';
 import { User } from 'src/users/users.model';
 
 @Injectable()
@@ -23,7 +25,7 @@ export class SequalizeConfigService implements SequelizeOptionsFactory {
       username,
       password,
       database,
-      models: [User],
+      models: [User, Cottages, Images],
       autoLoadModels: true,
       synchronize: true,
       define: {
