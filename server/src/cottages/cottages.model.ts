@@ -1,4 +1,5 @@
-import { Table, Model, Column } from 'sequelize-typescript';
+import { Table, Model, Column, HasMany } from 'sequelize-typescript';
+import { Images } from 'src/images/images.model';
 
 @Table
 export class Cottages extends Model {
@@ -19,4 +20,7 @@ export class Cottages extends Model {
 
   @Column({ defaultValue: 0 })
   price: number;
+
+  @HasMany(() => Images)
+  images: Images[];
 }

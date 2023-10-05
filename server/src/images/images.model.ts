@@ -23,11 +23,11 @@ export class Images extends Model {
   url!: string;
 
   @ForeignKey(() => Cottages)
-  @Column(DataType.INTEGER)
-  cottageId!: number;
+  @Column
+  cottageId: number;
 
   @BelongsTo(() => Cottages)
-  cottage!: Cottages;
+  cottage: Cottages;
 
   @CreatedAt
   @Column(DataType.DATE)
