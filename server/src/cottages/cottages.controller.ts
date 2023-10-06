@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { CottagesService } from './cottages.service';
 import { Cottages } from './cottages.model';
 import { CreateCottagesDto } from './dto/cottages.dto';
+import { Images } from 'src/images/images.model';
+import { CreateImageDto } from 'src/images/dto/create-image.dto';
 
 @Controller('cottages')
 export class CottagesController {
@@ -17,5 +26,14 @@ export class CottagesController {
     @Body() CreateCottagesDto: CreateCottagesDto,
   ): Promise<Cottages> {
     return this.cottagesService.create(CreateCottagesDto);
+  }
+
+  @Post(':id/images')
+  async addImage(
+    @Param('id', ParseIntPipe) cottageId: number,
+    @Body() createImageDto: CreateImageDto,
+  ): Promise<Images> {
+    const newImageDto = { ...createImageDto, cottageId };
+    return this.cottagesService.addImageToCottage(newImageDto);
   }
 }

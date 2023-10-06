@@ -7,10 +7,9 @@ import { Images } from 'src/images/images.model';
 
 @Injectable()
 export class CottagesService {
-  imagesModel: any;
   constructor(
-    @InjectModel(Cottages)
-    private cottageModel: typeof Cottages,
+    @InjectModel(Cottages) private readonly cottageModel: typeof Cottages,
+    @InjectModel(Images) private readonly imagesModel: typeof Images,
   ) {}
 
   async findAll(): Promise<Cottages[]> {
@@ -24,14 +23,14 @@ export class CottagesService {
     });
   }
 
-  async create(CreateCottagesDto: CreateCottagesDto): Promise<Cottages> {
-    return this.cottageModel.create(CreateCottagesDto);
+  async create(createCottagesDto: CreateCottagesDto): Promise<Cottages> {
+    return this.cottageModel.create(createCottagesDto as any);
   }
 
   async addImageToCottage(dto: CreateImageDto): Promise<Images> {
-    const image = new this.imagesModel();
-    image.url = dto.url;
-    image.cottageId = dto.cottageId;
-    return image.save();
+    return this.imagesModel.create({
+      url: dto.url,
+      cottageId: dto.cottageId,
+    });
   }
 }
