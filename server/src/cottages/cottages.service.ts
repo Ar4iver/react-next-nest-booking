@@ -27,10 +27,25 @@ export class CottagesService {
     return this.cottageModel.create(createCottagesDto as any);
   }
 
-  async addImageToCottage(dto: CreateImageDto): Promise<Images> {
-    return this.imagesModel.create({
-      url: dto.url,
-      cottageId: dto.cottageId,
-    });
+  async addImagesToCottage(dtos: CreateImageDto[]): Promise<Images[]> {
+    return this.imagesModel.bulkCreate(dtos as any);
+  }
+
+  async createWithImages(
+    createCottagesDto: CreateCottagesDto,
+    images: CreateImageDto[],
+  ): Promise<Cottages> {
+    const cottage = await this.cottageModel.create(createCottagesDto as any);
+
+    if (images && images.length > 0) {
+      await Promise.all(
+        images.map((img) => {
+          img.cottageId = cottage.id;
+          return this.imagesModel.create(img as any);
+        }),
+      );
+    }
+
+    return cottage;
   }
 }

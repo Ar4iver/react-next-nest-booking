@@ -5,15 +5,14 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  UploadedFile,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { CottagesService } from './cottages.service';
 import { Cottages } from './cottages.model';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CreateCottagesDto } from './dto/cottages.dto';
 import { Images } from 'src/images/images.model';
 import { CreateImageDto } from 'src/images/dto/create-image.dto';
@@ -26,20 +25,20 @@ export class CottagesController {
 
   @ApiOperation({ summary: 'Get all cottages' })
   @ApiOkResponse({ type: [Cottages] })
-  @Get()
+  @Get('cottages')
   async findAll(): Promise<Cottages[]> {
     return this.cottagesService.findAll();
   }
 
-  @ApiOperation({ summary: 'Create a new cottage' })
-  @ApiOkResponse({ type: Cottages })
-  @ApiBody({ type: CreateCottagesDto })
-  @Post()
-  async create(
-    @Body() CreateCottagesDto: CreateCottagesDto,
-  ): Promise<Cottages> {
-    return this.cottagesService.create(CreateCottagesDto);
-  }
+  // @ApiOperation({ summary: 'Create a new cottage' })
+  // @ApiOkResponse({ type: Cottages })
+  // @ApiBody({ type: CreateCottagesDto })
+  // @Post('cottages-create')
+  // async create(
+  //   @Body() CreateCottagesDto: CreateCottagesDto,
+  // ): Promise<Cottages> {
+  //   return this.cottagesService.create(CreateCottagesDto);
+  // }
 
   @ApiOperation({ summary: 'Add an image to a cottage by ID' })
   @ApiOkResponse({ type: Images })
@@ -48,21 +47,21 @@ export class CottagesController {
   async addImage(
     @Param('id', ParseIntPipe) cottageId: number,
     @Body() createImageDto: CreateImageDto,
-  ): Promise<Images> {
+  ): Promise<Images[]> {
     const newImageDto = { ...createImageDto, cottageId };
-    return this.cottagesService.addImageToCottage(newImageDto);
+    return this.cottagesService.addImagesToCottage(newImageDto as any);
   }
 
-  @ApiOperation({ summary: 'Upload an image for a specific cottage by ID' })
+  @ApiOperation({ summary: 'Create a new cottage with an image' })
   @ApiOkResponse({
-    description: 'The image has been successfully uploaded.',
-    type: 'object',
+    description: 'The cottage has been successfully created with its image.',
+    type: Cottages,
   })
   @ApiBody({ type: 'multipart/form-data' })
   @UseInterceptors(
-    FileInterceptor('image', {
+    FilesInterceptor('images', 5, {
       storage: diskStorage({
-        destination: './uploads/image',
+        destination: './uploads/images',
         filename: (req, file, cb) => {
           const fileExtension = file.originalname.split('.').pop();
           cb(null, `${uuidv4()}.${fileExtension}`);
@@ -70,20 +69,29 @@ export class CottagesController {
       }),
     }),
   )
-  @Post(':id/upload')
-  async uploadFile(
-    @Param('id') cottageId: number,
-    @UploadedFile() file,
-  ): Promise<{ url: string }> {
-    const imageUrl = `uploads/image/${file.filename}`;
+  @Post('cottages-create')
+  async createWithImage(
+    @UploadedFiles() files,
+    @Body('data') createCottagesDtoString: string,
+  ): Promise<Cottages> {
+    const createCottagesDto: CreateCottagesDto = JSON.parse(
+      createCottagesDtoString,
+    );
 
-    const createImageDto: CreateImageDto = {
-      url: imageUrl,
-      cottageId: Number(cottageId),
-    };
+    console.log(files); // массив загруженных файлов
 
-    await this.cottagesService.addImageToCottage(createImageDto);
+    const imageUrls = files.map((file) => `uploads/images/${file.filename}`);
 
-    return { url: imageUrl };
+    const createdCottage = await this.cottagesService.create(createCottagesDto);
+
+    for (const imageUrl of imageUrls) {
+      const createImageDto: CreateImageDto = {
+        url: imageUrl,
+        cottageId: createdCottage.id,
+      };
+      await this.cottagesService.addImagesToCottage(createImageDto as any);
+    }
+
+    return createdCottage;
   }
 }
