@@ -30,26 +30,33 @@ export class CottagesController {
     return this.cottagesService.findAll();
   }
 
-  // @ApiOperation({ summary: 'Create a new cottage' })
-  // @ApiOkResponse({ type: Cottages })
-  // @ApiBody({ type: CreateCottagesDto })
-  // @Post('cottages-create')
-  // async create(
-  //   @Body() CreateCottagesDto: CreateCottagesDto,
-  // ): Promise<Cottages> {
-  //   return this.cottagesService.create(CreateCottagesDto);
-  // }
-
-  @ApiOperation({ summary: 'Add an image to a cottage by ID' })
-  @ApiOkResponse({ type: Images })
+  @ApiOperation({ summary: 'Add images to a cottage by ID' })
+  @ApiOkResponse({ type: [Images] })
   @ApiBody({ type: CreateImageDto })
+  @UseInterceptors(
+    FilesInterceptor('images', 5, {
+      storage: diskStorage({
+        destination: './uploads/images',
+        filename: (req, file, cb) => {
+          const fileExtension = file.originalname.split('.').pop();
+          cb(null, `${uuidv4()}.${fileExtension}`);
+        },
+      }),
+    }),
+  )
   @Post(':id/images')
   async addImage(
     @Param('id', ParseIntPipe) cottageId: number,
-    @Body() createImageDto: CreateImageDto,
+    @UploadedFiles() files: Express.Multer.File[],
   ): Promise<Images[]> {
-    const newImageDto = { ...createImageDto, cottageId };
-    return this.cottagesService.addImagesToCottage(newImageDto as any);
+    const imageUrls = files.map((file) => `uploads/images/${file.filename}`);
+
+    const imageDTOs: CreateImageDto[] = imageUrls.map((imageUrl) => ({
+      url: imageUrl,
+      cottageId,
+    }));
+
+    return this.cottagesService.addImagesToCottage(imageDTOs);
   }
 
   @ApiOperation({ summary: 'Create a new cottage with an image' })
@@ -78,19 +85,16 @@ export class CottagesController {
       createCottagesDtoString,
     );
 
-    console.log(files); // массив загруженных файлов
-
     const imageUrls = files.map((file) => `uploads/images/${file.filename}`);
 
     const createdCottage = await this.cottagesService.create(createCottagesDto);
 
-    for (const imageUrl of imageUrls) {
-      const createImageDto: CreateImageDto = {
-        url: imageUrl,
-        cottageId: createdCottage.id,
-      };
-      await this.cottagesService.addImagesToCottage(createImageDto as any);
-    }
+    const imageDTOs: CreateImageDto[] = imageUrls.map((imageUrl) => ({
+      url: imageUrl,
+      cottageId: createdCottage.id,
+    }));
+
+    await this.cottagesService.addImagesToCottage(imageDTOs as any);
 
     return createdCottage;
   }
