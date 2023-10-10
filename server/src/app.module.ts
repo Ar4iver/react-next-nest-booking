@@ -7,6 +7,7 @@ import { databaseConfig } from './config/configuration';
 import { AuthModule } from './auth/auth.module';
 import { CottagesModule } from './cottages/cottages.module';
 import { ImagesModule } from './images/images.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ImagesModule } from './images/images.module';
     AuthModule,
     CottagesModule,
     ImagesModule,
+    BookingModule,
   ],
 })
 export class AppModule {}

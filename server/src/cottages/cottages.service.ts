@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Cottages } from './cottages.model';
 import { CreateCottagesDto } from './dto/cottages.dto';
 import { CreateImageDto } from 'src/images/dto/create-image.dto';
 import { Images } from 'src/images/images.model';
+import { UpdateCottageDto } from './dto/update-cottage.dto';
+import { unlink } from 'fs/promises';
 
 @Injectable()
 export class CottagesService {
@@ -25,6 +27,52 @@ export class CottagesService {
 
   async create(createCottagesDto: CreateCottagesDto): Promise<Cottages> {
     return this.cottageModel.create(createCottagesDto as any);
+  }
+
+  async findOne(cottageId: number): Promise<Cottages> {
+    const cottage = await Cottages.findOne({
+      where: { id: cottageId },
+      include: [Images],
+    });
+
+    if (!cottage) {
+      throw new NotFoundException(`Cottage with ID ${cottageId} not found`);
+    }
+
+    return cottage;
+  }
+
+  async updateCottage(
+    cottageId: number,
+    updateData: UpdateCottageDto,
+  ): Promise<Cottages> {
+    const cottage = await this.cottageModel.findByPk(cottageId);
+    if (!cottage) {
+      throw new NotFoundException(`Cottage with ID ${cottageId} not found`);
+    }
+
+    return cottage.update(updateData);
+  }
+
+  async deleteCottage(cottageId: number): Promise<void> {
+    const cottage = await this.cottageModel.findByPk(cottageId, {
+      include: [Images],
+    });
+
+    if (!cottage) {
+      throw new NotFoundException(`Cottage with ID ${cottageId} not found`);
+    }
+
+    for (const image of cottage.images) {
+      try {
+        console.log('Пытаюсь удалить файл:');
+        await unlink(`${image.url}`);
+      } catch (error) {
+        console.error(`Error removing file: ${image.url}`, error);
+      }
+    }
+    console.log('Файл удален:');
+    await cottage.destroy();
   }
 
   async addImagesToCottage(dtos: CreateImageDto[]): Promise<Images[]> {

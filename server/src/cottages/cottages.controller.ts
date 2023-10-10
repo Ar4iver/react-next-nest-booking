@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
   Post,
+  Put,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -16,7 +18,16 @@ import { Cottages } from './cottages.model';
 import { CreateCottagesDto } from './dto/cottages.dto';
 import { Images } from 'src/images/images.model';
 import { CreateImageDto } from 'src/images/dto/create-image.dto';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { UpdateCottageDto } from './dto/update-cottage.dto';
 
 @ApiTags('Cottages')
 @Controller('cottages')
@@ -28,6 +39,41 @@ export class CottagesController {
   @Get('cottages')
   async findAll(): Promise<Cottages[]> {
     return this.cottagesService.findAll();
+  }
+
+  @ApiOperation({ summary: 'Get a specific cottage by ID' })
+  @ApiOkResponse({ type: Cottages })
+  @Get(':id')
+  async findOne(
+    @Param('id', ParseIntPipe) cottageId: number,
+  ): Promise<Cottages> {
+    return this.cottagesService.findOne(cottageId);
+  }
+
+  @ApiOperation({ summary: 'Update cottage information by ID' })
+  @ApiResponse({ status: 200, description: 'Cottage updated successfully.' })
+  @ApiResponse({ status: 404, description: 'Cottage not found.' })
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) cottageId: number,
+    @Body() updateData: UpdateCottageDto,
+  ): Promise<Cottages> {
+    return this.cottagesService.updateCottage(cottageId, updateData);
+  }
+
+  @ApiOperation({ summary: 'Delete a cottage by ID' })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'ID of the cottage to delete',
+  })
+  @ApiOkResponse({ description: 'Successfully deleted the cottage' })
+  @ApiNotFoundResponse({ description: 'Cottage not found' })
+  @Delete(':id')
+  async deleteCottage(
+    @Param('id', ParseIntPipe) cottageId: number,
+  ): Promise<void> {
+    return this.cottagesService.deleteCottage(cottageId);
   }
 
   @ApiOperation({ summary: 'Add images to a cottage by ID' })
