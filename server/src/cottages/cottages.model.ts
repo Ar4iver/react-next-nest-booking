@@ -1,7 +1,8 @@
 import { Table, Model, Column, HasMany } from 'sequelize-typescript';
+import { Booking } from 'src/booking/booking.model';
 import { Images } from 'src/images/images.model';
 
-@Table
+@Table({ tableName: 'cottages' })
 export class Cottages extends Model {
   @Column
   name: string;
@@ -23,4 +24,7 @@ export class Cottages extends Model {
 
   @HasMany(() => Images)
   images: Images[];
+
+  @HasMany(() => Booking)
+  bookings: Booking[];
 }

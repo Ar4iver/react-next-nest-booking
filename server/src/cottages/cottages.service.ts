@@ -6,6 +6,7 @@ import { CreateImageDto } from 'src/images/dto/create-image.dto';
 import { Images } from 'src/images/images.model';
 import { UpdateCottageDto } from './dto/update-cottage.dto';
 import { unlink } from 'fs/promises';
+import { Booking } from 'src/booking/booking.model';
 
 @Injectable()
 export class CottagesService {
@@ -32,7 +33,7 @@ export class CottagesService {
   async findOne(cottageId: number): Promise<Cottages> {
     const cottage = await Cottages.findOne({
       where: { id: cottageId },
-      include: [Images],
+      include: [Images, Booking],
     });
 
     if (!cottage) {
