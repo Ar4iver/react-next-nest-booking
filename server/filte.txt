@@ -1,0 +1,53 @@
+Бронирования:
+
+Создание бронирования: POST /bookings
+Получение списка всех бронирований: GET /bookings
+Получение деталей конкретного бронирования: GET /bookings/:bookingId
+Изменение бронирования: PUT /bookings/:bookingId
+Отмена бронирования: DELETE /bookings/:bookingId
+Подтверждение бронирования: POST /bookings/:bookingId/confirm
+Оплата бронирования: POST /bookings/:bookingId/pay
+Объекты для бронирования (например, коттеджи, комнаты, места):
+
+Получение списка объектов: GET /items
+Поиск объектов по параметрам: GET /items/search
+Получение деталей объекта: GET /items/:itemId
+Получение доступности объекта: GET /items/:itemId/availability
+Пользователи:
+
+Регистрация: POST /users/register
+Вход: POST /users/login
+Выход: POST /users/logout
+Получение профиля: GET /users/:userId
+Изменение профиля: PUT /users/:userId
+Получение истории бронирований пользователя: GET /users/:userId/bookings
+Отзывы и рейтинги:
+
+Создание отзыва: POST /reviews
+Получение отзывов для объекта: GET /items/:itemId/reviews
+Рейтинг объекта: GET /items/:itemId/rating
+Специальные предложения и скидки:
+
+Получение списка акций: GET /promotions
+Применение скидочного кода: POST /bookings/:bookingId/apply-discount
+Оплата:
+
+Добавление платежного метода: POST /payment-methods
+Получение списка платежных методов: GET /payment-methods
+Уведомления и оповещения:
+
+Получение списка уведомлений для пользователя: GET /users/:userId/notifications
+Отметка уведомления как прочитанного: PUT /notifications/:notificationId/read
+Административный интерфейс:
+
+Получение статистики: GET /admin/statistics
+Управление пользователями: GET/POST/PUT/DELETE /admin/users
+Управление объектами: GET/POST/PUT/DELETE /admin/items
+Интеграции и API:
+
+Интеграция с внешними сервисами (например, сервисами оплаты): POST /integrations/payment
+Webhooks для оповещений: POST /webhooks/:eventName
+
+Напоминалка:
+
+Добавить фичу, которая будет уведомлять при добавление бронирования о том, что в данный промежуток дней есть уже броинование.

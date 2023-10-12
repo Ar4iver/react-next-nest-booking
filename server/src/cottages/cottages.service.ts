@@ -57,7 +57,7 @@ export class CottagesService {
 
   async deleteCottage(cottageId: number): Promise<void> {
     const cottage = await this.cottageModel.findByPk(cottageId, {
-      include: [Images],
+      include: [Images, Booking],
     });
 
     if (!cottage) {
