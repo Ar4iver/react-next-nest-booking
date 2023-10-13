@@ -1,11 +1,11 @@
 Бронирования:
 
-Создание бронирования: POST /bookings
-Получение списка всех бронирований: GET /bookings
-Получение деталей конкретного бронирования: GET /bookings/:bookingId
-Изменение бронирования: PUT /bookings/:bookingId
-Отмена бронирования: DELETE /bookings/:bookingId
-Подтверждение бронирования: POST /bookings/:bookingId/confirm
+Создание бронирования: POST /bookings *
+Получение списка всех бронирований: GET /bookings *
+Получение деталей конкретного бронирования: GET /bookings/:bookingId *
+Изменение бронирования: PUT /bookings/:bookingId *
+Отмена бронирования: DELETE /bookings/:bookingId *
+Подтверждение бронирования: POST /bookings/:bookingId/confirm *
 Оплата бронирования: POST /bookings/:bookingId/pay
 Объекты для бронирования (например, коттеджи, комнаты, места):
 
