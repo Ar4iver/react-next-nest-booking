@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Booking } from './booking.model';
-import { Cottages } from 'src/cottages/cottages.model';
 import { BookingDto } from './dto/bookings.dto';
+import { Cottages } from '../cottages/cottages.model';
 
 @Injectable()
 export class BookingService {

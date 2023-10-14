@@ -1,13 +1,15 @@
-import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { SequalizeConfigService } from './config/sequelizeConfig.service';
 import { databaseConfig } from './config/configuration';
-import { AuthModule } from './auth/auth.module';
-import { CottagesModule } from './cottages/cottages.module';
-import { ImagesModule } from './images/images.module';
-import { BookingModule } from './booking/booking.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CottagesModule } from './modules/cottages/cottages.module';
+import { ImagesModule } from './modules/images/images.module';
+import { BookingModule } from './modules/booking/booking.module';
+import { UsersModule } from './modules/users/users.module';
+import { LoggerMiddleware } from './middleware/logger.middleware';
+import { ReviewsModule } from './modules/reviews/reviews.module';
 
 @Module({
   imports: [
@@ -23,6 +25,11 @@ import { BookingModule } from './booking/booking.module';
     CottagesModule,
     ImagesModule,
     BookingModule,
+    ReviewsModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

@@ -4,11 +4,11 @@ import {
   SequelizeModuleOptions,
   SequelizeOptionsFactory,
 } from '@nestjs/sequelize';
-import { Booking } from 'src/booking/booking.model';
-import { Cottages } from 'src/cottages/cottages.model';
-import { Images } from 'src/images/images.model';
-import { User } from 'src/users/users.model';
-
+import { Booking } from 'src/modules/booking/booking.model';
+import { Cottages } from 'src/modules/cottages/cottages.model';
+import { Images } from 'src/modules/images/images.model';
+import { Reviews } from 'src/modules/reviews/reviews.model';
+import { User } from 'src/modules/users/users.model';
 @Injectable()
 export class SequalizeConfigService implements SequelizeOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
@@ -26,7 +26,7 @@ export class SequalizeConfigService implements SequelizeOptionsFactory {
       username,
       password,
       database,
-      models: [User, Cottages, Images, Booking],
+      models: [User, Cottages, Images, Booking, Reviews],
       autoLoadModels: true,
       synchronize: true,
       define: {

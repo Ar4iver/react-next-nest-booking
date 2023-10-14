@@ -16,8 +16,6 @@ import { diskStorage } from 'multer';
 import { CottagesService } from './cottages.service';
 import { Cottages } from './cottages.model';
 import { CreateCottagesDto } from './dto/cottages.dto';
-import { Images } from 'src/images/images.model';
-import { CreateImageDto } from 'src/images/dto/create-image.dto';
 import {
   ApiBody,
   ApiNotFoundResponse,
@@ -28,6 +26,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UpdateCottageDto } from './dto/update-cottage.dto';
+import { Images } from '../images/images.model';
+import { CreateImageDto } from '../images/dto/create-image.dto';
 
 @ApiTags('Cottages')
 @Controller('cottages')

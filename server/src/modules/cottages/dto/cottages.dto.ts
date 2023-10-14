@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsInt, IsArray } from 'class-validator';
-import { Images } from 'src/images/images.model';
+import { Images } from 'src/modules/images/images.model';
 
 // @IsNotEmpty() - проверка на непустое поле
 // @IsString() - проверка, что поле это строка

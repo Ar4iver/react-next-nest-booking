@@ -2,11 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Cottages } from './cottages.model';
 import { CreateCottagesDto } from './dto/cottages.dto';
-import { CreateImageDto } from 'src/images/dto/create-image.dto';
-import { Images } from 'src/images/images.model';
 import { UpdateCottageDto } from './dto/update-cottage.dto';
 import { unlink } from 'fs/promises';
-import { Booking } from 'src/booking/booking.model';
+import { Images } from '../images/images.model';
+import { Booking } from '../booking/booking.model';
+import { CreateImageDto } from '../images/dto/create-image.dto';
 
 @Injectable()
 export class CottagesService {
@@ -21,6 +21,10 @@ export class CottagesService {
         {
           association: 'images',
           attributes: ['url'],
+        },
+        {
+          association: 'reviews',
+          attributes: ['title', 'content', 'rating', 'publicationDate'],
         },
       ],
     });

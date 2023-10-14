@@ -1,6 +1,7 @@
 import { Table, Model, Column, HasMany } from 'sequelize-typescript';
-import { Booking } from 'src/booking/booking.model';
-import { Images } from 'src/images/images.model';
+import { Images } from '../images/images.model';
+import { Booking } from '../booking/booking.model';
+import { Reviews } from '../reviews/reviews.model';
 
 @Table({ tableName: 'cottages' })
 export class Cottages extends Model {
@@ -27,4 +28,7 @@ export class Cottages extends Model {
 
   @HasMany(() => Booking)
   bookings: Booking[];
+
+  @HasMany(() => Reviews)
+  reviews: Reviews[];
 }

@@ -10,7 +10,7 @@ import {
   CreatedAt,
   UpdatedAt,
 } from 'sequelize-typescript';
-import { Cottages } from 'src/cottages/cottages.model';
+import { Cottages } from '../cottages/cottages.model';
 
 @Table
 export class Images extends Model {
