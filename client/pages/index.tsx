@@ -1,3 +1,4 @@
+import SignUpPage from '@components/src/components/teamplates/SignUpPage'
 import Head from 'next/head'
 
 function Home() {
@@ -14,7 +15,7 @@ function Home() {
           href="/img/aframeIcon.jpg"
         />
       </Head>
-      <h1>Главная страница</h1>
+      <SignUpPage />
     </>
   )
 }

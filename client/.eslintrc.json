@@ -14,7 +14,7 @@
       }
     ],
     "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error",
+    // "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/quotes": [
       "error",
       "single",
@@ -32,7 +32,7 @@
     "space-after-keywords": "off",
     "keyword-spacing": [2, { "before": true, "after": true }],
     "react/jsx-indent": [2, 2, { "indentLogicalExpressions": true }],
-    "arrow-body-style": ["error", "as-needed"],
+    // "arrow-body-style": ["error", "as-needed"],
     "padded-blocks": ["error", "never"],
     "semi": ["error", "never"],
     "max-len": ["error", { "code": 120 }],

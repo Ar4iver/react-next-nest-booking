@@ -1,64 +1,60 @@
-import { TextField } from '@mui/material'
-import React, { useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Form, useForm } from '../../../../hooks'
-import { getAuthErrors, signUp } from '../../../../store/users'
-import { UserType } from '../../../types/types'
+import React from 'react'
 import Button from '../../elements/Button/Button'
-import { InputField } from '../../../common/Fields'
-import withPassword from '../../../common/Fields/HOC/withPassword'
-import validatorConfig from './validatorConfig'
+import InputField from '../../elements/Fields/InputField'
 
-const initialData: UserType = {
-  username: '',
-  email: '',
-  password: '',
-}
+// const initialData: UserType = {
+//   username: '',
+//   email: '',
+//   password: '',
+// }
 
 const RegisterForm = () => {
-  const { data, errors, handleInputChange, handleKeyDown, validate } = useForm(
-    initialData,
-    true,
-    validatorConfig
-  )
+  // const { data, errors, handleInputChange, handleKeyDown, validate } = useForm(
+  //   initialData,
+  //   true,
+  //   validatorConfig
+  // )
 
-  const loginError = useSelector(getAuthErrors())
-  const dispatch = useDispatch()
+  // const loginError = useSelector(getAuthErrors())
+  // const dispatch = useDispatch()
 
-  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    if (validate(data)) {
-      dispatch(signUp(data))
-    }
-  }
-
-  const InputFieldWithPassword = useMemo(() => withPassword(InputField), [])
+  // const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  //   e.preventDefault()
+  //   if (validate(data)) {
+  //     dispatch(signUp(data))
+  //   }
+  // }
 
   return (
     <>
-      <Form
-        data={data}
-        errors={errors}
-        handleChange={handleInputChange}
-        handleKeyDown={handleKeyDown}
+      <form
+      // errors={errors}
+      // handleChange={handleInputChange}
+      // handleKeyDown={handleKeyDown}
       >
         <InputField autoFocus name="username" label="Придумайте ваш логин" />
         <InputField name="email" label="Почта" />
-        <InputFieldWithPassword
+        {/* <InputFieldWithPassword
           name="password"
           label="Пароль"
           type="password"
+        /> */}
+        <InputField autoFocus name="password" label="Придумайте пароль" />
+        <InputField
+          autoFocus
+          name="password"
+          label="Повторите введённый пароль"
         />
         <Button
           type="submit"
-          onClick={handleSubmit}
+          // onClick={handleSubmit}
           fullWidth
-          disabled={Object.keys(errors).length !== 0}
+          // disabled={Object.keys(errors).length !== 0}
         >
           Зарегистрироваться
         </Button>
-      </Form>
-      {loginError && <p className="form__enter-error">{loginError}</p>}
+      </form>
+      {/* {loginError && <p className="form__enter-error">{loginError}</p>} */}
     </>
   )
 }

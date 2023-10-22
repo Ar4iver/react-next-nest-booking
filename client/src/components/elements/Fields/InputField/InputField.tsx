@@ -17,7 +17,7 @@ const InputField: React.FC<InputTypes> = ({
   name,
   value,
   onChange,
-  error = null,
+  // error = null,
   ...rest
 }) => (
   <TextField
@@ -28,7 +28,7 @@ const InputField: React.FC<InputTypes> = ({
     onChange={onChange}
     type={type}
     {...rest}
-    {...(error && { error: true, helperText: error })}
+    // {...(error && { error: true, helperText: error })}
   />
 )
 
