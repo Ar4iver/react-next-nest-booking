@@ -27,7 +27,8 @@ const Button: React.FC<ButtonProps> = ({
       background:
         variant === 'outlined'
           ? 'transparent'
-          : 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+          : // : 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+            'linear-gradient(45deg, rgba(243,191,33,1) 30%, rgba(33,203,243,1) 90%);',
     }}
     {...rest}
   >
