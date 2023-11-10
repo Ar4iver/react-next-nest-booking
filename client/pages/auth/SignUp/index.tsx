@@ -1,8 +1,9 @@
 import React from 'react'
-import RegisterForm from '../modules/forms/RegisterForm/RegisterForm'
 import { Button, Paper } from '@mui/material'
+import RegisterForm from '@components/src/components/modules/forms/RegisterForm/RegisterForm'
+import Link from 'next/link'
 
-const SignUpPage: React.FC = () => {
+const SignUp = () => {
   return (
     <>
       <div className="login-form__wrapper">
@@ -11,9 +12,11 @@ const SignUpPage: React.FC = () => {
           <RegisterForm />
           <div className="login-form__footer">
             <span>Уже есть аккаунт на AframeHotel?</span>
-            <Button variant="outlined" size="small">
-              Войти
-            </Button>
+            <Link href="/auth/SignIn" passHref>
+              <Button variant="outlined" size="small">
+                Войти
+              </Button>
+            </Link>
           </div>
         </Paper>
       </div>
@@ -21,4 +24,4 @@ const SignUpPage: React.FC = () => {
   )
 }
 
-export default SignUpPage
+export default SignUp

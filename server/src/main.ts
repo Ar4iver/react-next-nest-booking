@@ -33,6 +33,11 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: 'http://localhost:3000', // Указывает, с каких источников разрешены запросы
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Разрешенные методы
+    allowedHeaders: 'Content-Type, Accept', // Разрешенные заголовки
+  });
   await app.listen(3001);
 }
 bootstrap();

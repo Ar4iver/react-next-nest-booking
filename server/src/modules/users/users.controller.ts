@@ -27,7 +27,7 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @ApiResponse({ type: SignupResponse })
-  @Post('/signup')
+  @Post('/v1/signup')
   @HttpCode(HttpStatus.CREATED)
   @Header('Content-type', 'application/json')
   createUser(@Body() createUserDto: CreateUserDto) {
@@ -36,7 +36,7 @@ export class UsersController {
 
   @ApiBody({ type: LoginUserRequest })
   @ApiOkResponse({ type: LoginUserResponse })
-  @Post('/login')
+  @Post('/v1/login')
   @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Header('Content-type', 'application/json')

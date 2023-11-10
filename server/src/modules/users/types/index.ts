@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginUserRequest {
-  @ApiProperty({ example: 'Ivan' })
-  username: string;
+  @ApiProperty({ example: 'ivan@mail.ru' })
+  email: string;
 
   @ApiProperty({ example: 'Ivan1234' })
   password: string;
@@ -12,13 +12,15 @@ export class LoginUserResponse {
   @ApiProperty({
     example: {
       userId: 1,
-      username: 'Ivan',
+      firstname: 'Иван',
+      lastname: 'Петров',
       email: 'Ivan@gmail.com',
     },
   })
   user: {
     userId: number;
-    username: string;
+    firstname: string;
+    lastnamel: string;
     email: string;
   };
 
@@ -35,8 +37,11 @@ export class LoginCheckResponse {
   @ApiProperty({ example: '1' })
   userId: number;
 
-  @ApiProperty({ example: 'Ivan' })
-  username: string;
+  @ApiProperty({ example: 'Иван' })
+  firstname: string;
+
+  @ApiProperty({ example: 'Петров' })
+  lastname: string;
 
   @ApiProperty({ example: 'Ivan@gmail.com' })
   email: string;
@@ -46,14 +51,17 @@ export class SignupResponse {
   @ApiProperty({ example: '1' })
   Id: number;
 
-  @ApiProperty({ example: 'Ivan' })
-  username: string;
+  @ApiProperty({ example: 'Иван' })
+  firstname: string;
 
-  @ApiProperty({ example: 'hashedPassword' })
-  password: string;
+  @ApiProperty({ example: 'Петров' })
+  lastFname: string;
 
   @ApiProperty({ example: 'Ivan@gmail.com' })
   email: string;
+
+  @ApiProperty({ example: 'hashedPassword' })
+  password: string;
 
   @ApiProperty({ example: '2023-09-26T14:41:35.261Z' })
   updatedAt: number;
