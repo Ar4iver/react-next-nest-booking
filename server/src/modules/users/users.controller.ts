@@ -52,7 +52,7 @@ export class UsersController {
   }
 
   @ApiResponse({ type: LogoutUserResponse })
-  @Get('/logout')
+  @Get('/v1/logout')
   logout(@Request() req) {
     req.session.destroy();
     return { msg: 'session has ended' };

@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import * as request from 'supertest';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -10,6 +10,7 @@ import { databaseConfig } from 'src/config/configuration';
 import { SequalizeConfigService } from 'src/config/sequelizeConfig.service';
 import { User } from 'src/modules/users/users.model';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { CottagesModule } from 'src/modules/cottages/cottages.module';
 
 const mockedUser = {
   firstname: 'Сергей',
@@ -18,7 +19,7 @@ const mockedUser = {
   password: 'sergey1234',
 };
 
-describe('Auth Controller', () => {
+describe('Cottages Controller', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -31,6 +32,7 @@ describe('Auth Controller', () => {
         ConfigModule.forRoot({
           load: [databaseConfig],
         }),
+        CottagesModule,
         AuthModule,
       ],
     }).compile();
@@ -65,34 +67,59 @@ describe('Auth Controller', () => {
     await User.destroy({ where: { email: mockedUser.email } });
   });
 
-  it('should login user', async () => {
-    const response = await request(app.getHttpServer())
-      .post('/users/v1/login')
-      .send({ email: mockedUser.email, password: mockedUser.password });
-
-    expect(response.body.user.firstname).toBe(mockedUser.firstname);
-    expect(response.body.user.lastname).toBe(mockedUser.lastname);
-    expect(response.body.user.email).toBe(mockedUser.email);
-    expect(response.body.msg).toBe('Logged in');
-  });
-
-  it('should login-check', async () => {
+  it('should get one cottage', async () => {
     const login = await request(app.getHttpServer())
       .post('/users/v1/login')
       .send({ email: mockedUser.email, password: mockedUser.password });
 
-    const loginCheck = await request(app.getHttpServer())
-      .get('/users/v1/login-check')
-      .set('cookie', login.headers['set-cookie']);
+    const response = await request(app.getHttpServer())
+      .get('/cottages/v1/find/4')
+      .set('Cookie', login.headers['set-cookie']);
 
-    expect(loginCheck.body.firstname).toBe(mockedUser.firstname);
-    expect(loginCheck.body.lastname).toBe(mockedUser.lastname);
-    expect(loginCheck.body.email).toBe(mockedUser.email);
-  });
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: 4,
+        name: expect.any(String),
+        description: expect.any(String),
+        numberOfBedrooms: expect.any(Number),
+        rate: expect.any(Number),
+        maxGuests: expect.any(Number),
+        price: expect.any(Number),
+        updatedAt: expect.any(String),
+        createdAt: expect.any(String),
+        images: expect.any(Array),
+        bookings: expect.any(Array),
+      }),
+    );
 
-  it('should logout user', async () => {
-    const response = await request(app.getHttpServer()).get('/users/v1/logout');
+    // Дополнительные проверки для images, если массив не пустой
+    if (response.body.images.length > 0) {
+      response.body.images.forEach((image) => {
+        expect(image).toEqual(
+          expect.objectContaining({
+            id: expect.any(Number),
+            url: expect.any(String),
+            cottageId: 4,
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
+          }),
+        );
+      });
+    }
 
-    expect(response.body.msg).toBe('session has ended');
+    // Аналогично для bookings, если массив не пустой
+    if (response.body.bookings.length > 0) {
+      response.body.bookings.forEach((booking) => {
+        // Замените это своей ожидаемой структурой для объекта booking
+        expect(booking).toEqual(
+          expect.objectContaining({
+            id: expect.any(Number),
+            cottageId: 4,
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
+          }),
+        );
+      });
+    }
   });
 });

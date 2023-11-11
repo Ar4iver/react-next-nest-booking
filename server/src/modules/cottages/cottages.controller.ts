@@ -43,7 +43,7 @@ export class CottagesController {
 
   @ApiOperation({ summary: 'Get a specific cottage by ID' })
   @ApiOkResponse({ type: Cottages })
-  @Get(':id')
+  @Get('/v1/find/:id')
   async findOne(
     @Param('id', ParseIntPipe) cottageId: number,
   ): Promise<Cottages> {
