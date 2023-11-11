@@ -4,7 +4,7 @@ export class LoginUserRequest {
   @ApiProperty({ example: 'ivan@mail.ru' })
   email: string;
 
-  @ApiProperty({ example: 'Ivan1234' })
+  @ApiProperty({ example: 'ivan1234' })
   password: string;
 }
 
@@ -20,7 +20,7 @@ export class LoginUserResponse {
   user: {
     userId: number;
     firstname: string;
-    lastnamel: string;
+    lastname: string;
     email: string;
   };
 

@@ -45,7 +45,7 @@ export class UsersController {
   }
 
   @ApiResponse({ type: LoginCheckResponse })
-  @Get('/login-check')
+  @Get('/v1/login-check')
   @UseGuards(AuthenticatedGuard)
   loginCheck(@Request() req) {
     return req.user;

@@ -19,9 +19,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    if (user && passwordValid) {
+    if (user && password) {
       return {
         userId: user.id,
+        firstname: user.firstname,
+        lastname: user.lastname,
         email: user.email,
       };
     }

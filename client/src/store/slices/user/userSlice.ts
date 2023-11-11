@@ -61,6 +61,7 @@ const userSlice = createSlice({
         console.log(response)
         state.email = response.email
         state.isAuth = true
+        state.loading = false
       })
   },
 })

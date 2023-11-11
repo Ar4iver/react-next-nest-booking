@@ -10,7 +10,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   readonly lastname: string;
 
-  @ApiProperty({ example: 'Ivan@gmail.com' })
+  @ApiProperty({ example: 'ivan@gmail.com' })
   @IsNotEmpty()
   readonly email: string;
 

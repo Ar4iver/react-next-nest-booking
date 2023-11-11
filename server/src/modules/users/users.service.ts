@@ -11,7 +11,7 @@ export class UsersService {
     private useModel: typeof User,
   ) {}
 
-  findOne(filter: { where: { id?: string; email?: string } }): Promise<User> {
+  findOne(filter: { where: { email: string } }): Promise<User> {
     return this.useModel.findOne({ ...filter });
   }
 
