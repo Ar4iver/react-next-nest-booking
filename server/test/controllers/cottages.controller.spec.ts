@@ -11,12 +11,41 @@ import { SequalizeConfigService } from 'src/config/sequelizeConfig.service';
 import { User } from 'src/modules/users/users.model';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { CottagesModule } from 'src/modules/cottages/cottages.module';
+import { Cottages } from 'src/modules/cottages/cottages.model';
+import { Images } from 'src/modules/images/images.model';
+import { Booking } from 'src/modules/booking/booking.model';
 
 const mockedUser = {
   firstname: 'Сергей',
   lastname: 'Горостопов',
   email: 'sergey@gmail.com',
   password: 'sergey1234',
+};
+
+const mockedCottage = {
+  id: 4,
+  name: 'Новый коттедж 6',
+  description: 'описание нового коттеджа 2',
+  numberOfBedrooms: 7,
+  rate: 3,
+  maxGuests: 1,
+  price: 6000,
+  images: [
+    {
+      id: 1,
+      url: 'uploads/images/2108c773-f8d1-496d-8eb1-df7d45b1a9db.jpg',
+      cottageId: 4,
+    },
+  ],
+  bookings: [
+    {
+      id: 1,
+      cottageId: 4,
+      startDate: '2023-11-12T00:00:00.000Z',
+      endDate: '2023-11-15T00:00:00.000Z',
+      status: 'pending',
+    },
+  ],
 };
 
 describe('Cottages Controller', () => {
@@ -50,7 +79,7 @@ describe('Cottages Controller', () => {
     await app.init();
   });
 
-  beforeEach(async () => {
+  const createUser = async () => {
     const user = new User();
 
     const hashedPassword = await bcrypt.hash(mockedUser.password, 10);
@@ -61,9 +90,53 @@ describe('Cottages Controller', () => {
     user.password = hashedPassword;
 
     return user.save();
+  };
+
+  const createCottage = async () => {
+    const cottage = new Cottages();
+
+    cottage.id = mockedCottage.id;
+    cottage.name = mockedCottage.name;
+    cottage.description = mockedCottage.description;
+    cottage.numberOfBedrooms = mockedCottage.numberOfBedrooms;
+    cottage.rate = mockedCottage.rate;
+    cottage.maxGuests = mockedCottage.maxGuests;
+    cottage.price = mockedCottage.price;
+
+    await cottage.save();
+
+    for (const img of mockedCottage.images) {
+      const image = new Images();
+      image.id = img.id;
+      image.cottageId = img.cottageId;
+      image.url = img.url;
+      image.cottage = cottage;
+      await image.save();
+    }
+
+    for (const bk of mockedCottage.bookings) {
+      const booking = new Booking();
+      booking.id = bk.id;
+      booking.cottageId = bk.cottageId;
+      booking.startDate = new Date(bk.startDate);
+      booking.endDate = new Date(bk.endDate);
+      booking.status = bk.status as 'pending' | 'confirmed' | 'cancelled';
+      booking.cottage = cottage;
+      await booking.save();
+    }
+
+    return await Cottages.findByPk(cottage.id, {
+      include: [Images, Booking],
+    });
+  };
+
+  beforeEach(async () => {
+    await createUser();
+    await createCottage();
   });
 
   afterEach(async () => {
+    await Cottages.destroy({ where: { id: mockedCottage.id } });
     await User.destroy({ where: { email: mockedUser.email } });
   });
 
@@ -92,33 +165,29 @@ describe('Cottages Controller', () => {
       }),
     );
 
-    // Дополнительные проверки для images, если массив не пустой
-    if (response.body.images.length > 0) {
+    if (!!response.body.images.length) {
       response.body.images.forEach((image) => {
-        expect(image).toEqual(
-          expect.objectContaining({
-            id: expect.any(Number),
-            url: expect.any(String),
-            cottageId: 4,
-            createdAt: expect.any(String),
-            updatedAt: expect.any(String),
-          }),
-        );
+        expect(image).toEqual({
+          id: expect.any(Number),
+          url: expect.any(String),
+          cottageId: 4,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        });
       });
     }
 
-    // Аналогично для bookings, если массив не пустой
-    if (response.body.bookings.length > 0) {
+    if (!!response.body.bookings.length) {
       response.body.bookings.forEach((booking) => {
-        // Замените это своей ожидаемой структурой для объекта booking
-        expect(booking).toEqual(
-          expect.objectContaining({
-            id: expect.any(Number),
-            cottageId: 4,
-            createdAt: expect.any(String),
-            updatedAt: expect.any(String),
-          }),
-        );
+        expect(booking).toEqual({
+          id: expect.any(Number),
+          cottageId: 4,
+          startDate: expect.any(String),
+          endDate: expect.any(String),
+          status: expect.any(String),
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        });
       });
     }
   });
