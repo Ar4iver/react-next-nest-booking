@@ -7,7 +7,7 @@ interface LayoutCottagesListProps {
   children: ReactNode
 }
 
-const LayoutCottagesList = ({ children }: LayoutCottagesListProps) => {
+const LayoutSingleCottage = ({ children }: LayoutCottagesListProps) => {
   return (
     <>
       <Header />
@@ -19,4 +19,4 @@ const LayoutCottagesList = ({ children }: LayoutCottagesListProps) => {
   )
 }
 
-export default LayoutCottagesList
+export default LayoutSingleCottage

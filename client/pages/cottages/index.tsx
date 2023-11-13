@@ -1,9 +1,12 @@
 import LayoutCottagesList from '@components/src/components/layout/LayoutCottagesPage'
+import CottageListSkeleton from '@components/src/components/modules/cottages/CottagesList/CottageListSkeleton'
+import CottagesList from '@components/src/components/modules/cottages/CottagesList/CottagesList'
 import React, { ReactElement } from 'react'
 
 const CottagesPage = () => {
+  const roomsIsLoading = true
   return (
-    <>
+    <main className="rooms-page">
       <aside className="rooms-page__filters">
         {/* <RoomsFilter onReset={handleResetFilters} /> */}
         <p>Тут будет фильтр CottagesFilter</p>
@@ -16,13 +19,13 @@ const CottagesPage = () => {
           {/* <RoomsSort sortBy={sortBy} onSort={handleSort} /> */}
         </div>
         <h2 className="rooms__title">Номера, которые мы для вас подобрали</h2>
-        {/* {roomsIsLoading ? (
-    <RoomsListSkeleton pageSize={pageSize} />
-  ) : (
-    <RoomsList rooms={roomsListCrop} />
-  )} */}
+        {roomsIsLoading ? (
+          <CottageListSkeleton pageSize={12} />
+        ) : (
+          <CottagesList />
+        )}
       </section>
-    </>
+    </main>
   )
 }
 
@@ -30,4 +33,4 @@ CottagesPage.getLayout = function getLayout(page: ReactElement) {
   return <LayoutCottagesList>{page}</LayoutCottagesList>
 }
 
-export default React.memo(CottagesPage)
+export default CottagesPage
