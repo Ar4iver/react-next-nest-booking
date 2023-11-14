@@ -1,6 +1,7 @@
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import slugify from 'slugify'
 import AcUnitIcon from '@mui/icons-material/AcUnit'
 import ComputerIcon from '@mui/icons-material/Computer'
 import WifiIcon from '@mui/icons-material/Wifi'
@@ -33,13 +34,17 @@ const CottageCard = ({ ...cottage }: ICottageProps) => {
                 className="room-card__gallery-item--img"
                 src={img.url}
                 alt="cottagePhoto"
-                width={100}
-                height={150}
+                width={0}
+                height={0}
+                layout="responsive"
               />
             </div>
           ))}
       </ImageSlider>
-      <Link href={`/cottages/cottage/${1}`} className="room-card__description">
+      <Link
+        href={`/cottages/cottage/${slugify(cottage.name, { lower: true })}`}
+        className="room-card__description"
+      >
         <div className="room-card__description-row">
           <h3 className="room-card__title">
             <span className="room-card__title--big">{cottage.name}</span>

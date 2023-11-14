@@ -68,5 +68,5 @@ export interface ICottageProps {
   images: ImageProps[]
   bookings: IBookingProps[]
   reviews: IReviewsProps[]
-  comforts: []
+  comforts: string[]
 }
