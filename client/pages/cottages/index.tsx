@@ -4,7 +4,161 @@ import CottagesList from '@components/src/components/modules/cottages/CottagesLi
 import React, { ReactElement } from 'react'
 
 const CottagesPage = () => {
-  const roomsIsLoading = true
+  const roomsIsLoading = false
+
+  const cottages = [
+    {
+      id: 4,
+      name: 'White House',
+      description: 'описание нового коттеджа 2',
+      numberOfBedrooms: 7,
+      rate: 3,
+      maxGuests: 1,
+      price: 6000,
+      images: [
+        {
+          id: 1,
+          url: '/public/img/whiteHouse_cottage.jpg',
+          cottageId: 4,
+        },
+      ],
+      bookings: [
+        {
+          id: 1,
+          cottageId: 4,
+          startDate: '2023-11-12T00:00:00.000Z',
+          endDate: '2023-11-15T00:00:00.000Z',
+          status: 'pending',
+        },
+      ],
+      reviews: [
+        {
+          id: 1,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+        {
+          id: 2,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+        {
+          id: 3,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+      ],
+
+      comforts: ['1', '2', '3'],
+    },
+    {
+      id: 4,
+      name: 'Bordo House',
+      description: 'описание нового коттеджа 2',
+      numberOfBedrooms: 7,
+      rate: 3,
+      maxGuests: 1,
+      price: 6000,
+      images: [
+        {
+          id: 1,
+          url: '/public/img/whiteHouse_cottage.jpg',
+          cottageId: 4,
+        },
+      ],
+      bookings: [
+        {
+          id: 1,
+          cottageId: 4,
+          startDate: '2023-11-12T00:00:00.000Z',
+          endDate: '2023-11-15T00:00:00.000Z',
+          status: 'pending',
+        },
+      ],
+      reviews: [
+        {
+          id: 1,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+        {
+          id: 2,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+        {
+          id: 3,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+      ],
+
+      comforts: ['1', '2', '3'],
+    },
+    {
+      id: 4,
+      name: 'Brown House',
+      description: 'описание нового коттеджа 2',
+      numberOfBedrooms: 7,
+      rate: 3,
+      maxGuests: 1,
+      price: 6000,
+      images: [
+        {
+          id: 1,
+          url: '/public/img/whiteHouse_cottage.jpg',
+          cottageId: 4,
+        },
+      ],
+      bookings: [
+        {
+          id: 1,
+          cottageId: 4,
+          startDate: '2023-11-12T00:00:00.000Z',
+          endDate: '2023-11-15T00:00:00.000Z',
+          status: 'pending',
+        },
+      ],
+      reviews: [
+        {
+          id: 1,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+        {
+          id: 2,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+        {
+          id: 3,
+          title: 'Отличный домик',
+          content: 'Очень понравился коттедж, отличный сервис и обслуживание!',
+          cottageId: 4,
+          publicationDate: '2023-11-17T00:00:00.000Z',
+        },
+      ],
+
+      comforts: ['1', '2', '3'],
+    },
+  ]
+
   return (
     <main className="rooms-page">
       <aside className="rooms-page__filters">
@@ -22,7 +176,7 @@ const CottagesPage = () => {
         {roomsIsLoading ? (
           <CottageListSkeleton pageSize={12} />
         ) : (
-          <CottagesList />
+          <CottagesList cottages={cottages} />
         )}
       </section>
     </main>

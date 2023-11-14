@@ -1,20 +1,16 @@
 import React from 'react'
 import CottageCard from '../CottageCard/CottageCard'
+import { ICottagesList } from '@components/src/types/types'
 
-interface CottagesList {
-  rooms?: []
-}
-
-const CottagesList = () => {
+const CottagesList = ({ cottages }: ICottagesList) => {
   return (
-    <div>
-      <h1>Список коттеджей</h1>
-      <CottageCard />
-      <CottageCard />
-      <CottageCard />
-      <CottageCard />
-      <CottageCard />
-    </div>
+    <ul className="rooms__list">
+      {cottages.map((cottage) => (
+        <li key={cottage.id} className="rooms__list-item">
+          <CottageCard {...cottage} />
+        </li>
+      ))}
+    </ul>
   )
 }
 
