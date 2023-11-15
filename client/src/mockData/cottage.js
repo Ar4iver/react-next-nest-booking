@@ -152,6 +152,7 @@ export const cottages = [
     id: 4,
     name: 'Black Vintage Residence',
     description:
+      // eslint-disable-next-line max-len
       'Этот очаровательный коттедж Black Vintage Residence предлагает уникальный опыт отдыха с 8 спальнями и комфортом на любой вкус.',
     numberOfBedrooms: 8,
     rate: 4,
@@ -167,6 +168,7 @@ export const cottages = [
         id: 1,
         title: 'Отзыв 1',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Коттедж Black Vintage Residence превзошел все мои ожидания с его 8 спальнями и уютной атмосферой.',
         cottageId: 1,
         publicationDate: '2023-10-28T22:41:14',
@@ -175,6 +177,7 @@ export const cottages = [
         id: 2,
         title: 'Отзыв 2',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Коттедж Black Vintage Residence превзошел все мои ожидания с его 8 спальнями и уютной атмосферой.',
         cottageId: 1,
         publicationDate: '2023-05-24T20:21:31',
@@ -183,6 +186,7 @@ export const cottages = [
         id: 3,
         title: 'Отзыв 3',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Коттедж Black Vintage Residence превзошел все мои ожидания с его 8 спальнями и уютной атмосферой.',
         cottageId: 1,
         publicationDate: '2023-04-12T23:59:10',
@@ -210,6 +214,7 @@ export const cottages = [
         id: 4,
         title: 'Отзыв 4',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Silver Cozy Manor создал уютную атмосферу и идеально подходит для семейного отдыха.',
         cottageId: 2,
         publicationDate: '2023-09-15T18:30:22',
@@ -221,6 +226,7 @@ export const cottages = [
     id: 6,
     name: 'Black Vintage Residence',
     description:
+      // eslint-disable-next-line max-len
       'Этот очаровательный коттедж Black Vintage Residence предлагает уникальный опыт отдыха с 8 спальнями и комфортом на любой вкус.',
     numberOfBedrooms: 8,
     rate: 4,
@@ -236,6 +242,7 @@ export const cottages = [
         id: 1,
         title: 'Отзыв 1',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Коттедж Black Vintage Residence превзошел все мои ожидания с его 8 спальнями и уютной атмосферой.',
         cottageId: 1,
         publicationDate: '2023-10-28T22:41:14',
@@ -244,6 +251,7 @@ export const cottages = [
         id: 2,
         title: 'Отзыв 2',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Коттедж Black Vintage Residence превзошел все мои ожидания с его 8 спальнями и уютной атмосферой.',
         cottageId: 1,
         publicationDate: '2023-05-24T20:21:31',
@@ -252,6 +260,7 @@ export const cottages = [
         id: 3,
         title: 'Отзыв 3',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Коттедж Black Vintage Residence превзошел все мои ожидания с его 8 спальнями и уютной атмосферой.',
         cottageId: 1,
         publicationDate: '2023-04-12T23:59:10',
@@ -279,6 +288,7 @@ export const cottages = [
         id: 4,
         title: 'Отзыв 4',
         content:
+          // eslint-disable-next-line max-len
           'Прекрасное место для отдыха! Silver Cozy Manor создал уютную атмосферу и идеально подходит для семейного отдыха.',
         cottageId: 2,
         publicationDate: '2023-09-15T18:30:22',
@@ -306,6 +316,7 @@ export const cottages = [
         id: 5,
         title: 'Отзыв 5',
         content:
+          // eslint-disable-next-line max-len
           'Золотой уголок рая! Golden Charming Sanctuary - это идеальное место для романтического отдыха. Роскошь и красота в каждой детали.',
         cottageId: 3,
         publicationDate: '2023-07-19T14:12:45',
@@ -317,6 +328,7 @@ export const cottages = [
     id: 9,
     name: 'Grey Modern Bungalow',
     description:
+      // eslint-disable-next-line max-len
       'Современный бунгало Grey Modern Bungalow предоставляет вам комфортное проживание и возможность насладиться природой.',
     numberOfBedrooms: 5,
     rate: 4.3,
@@ -333,6 +345,7 @@ export const cottages = [
         id: 6,
         title: 'Отзыв 6',
         content:
+          // eslint-disable-next-line max-len
           'Отличное место для отдыха с друзьями! Grey Modern Bungalow имеет современный дизайн и удобства, которые нужны для отличного отпуска.',
         cottageId: 4,
         publicationDate: '2023-06-05T10:55:17',
@@ -360,6 +373,7 @@ export const cottages = [
         id: 7,
         title: 'Отзыв 7',
         content:
+          // eslint-disable-next-line max-len
           'Потрясающее убежище! Grey Serene Sanctuary - это идеальное место для отдыха от городской суеты. Тишина и природа вокруг вас.',
         cottageId: 5,
         publicationDate: '2023-08-10T16:40:55',

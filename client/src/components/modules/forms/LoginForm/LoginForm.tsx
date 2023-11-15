@@ -1,21 +1,35 @@
 import InputField from '@components/src/components/elements/Fields/InputField'
+import Spinner from '@components/src/components/elements/Spinner/Spinner'
+import { useAppDispatch, useAppSelector } from '@components/src/hooks/hooks'
 import { fetchLogin } from '@components/src/store/slices/user/userThunks'
+import { showAuthError } from '@components/src/utils/errors'
 import { Button } from '@mui/material'
-import { FormEvent, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { redirect } from 'next/navigation'
+import { FormEvent, useEffect, useState } from 'react'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const isLoading = useAppSelector((state) => state.user.loading)
+  const error = useAppSelector((state) => state.user.error)
+
+  useEffect(() => {
+    if (error) {
+      showAuthError(error)
+    }
+  }, [error])
 
   const data = { email, password }
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  ///??????
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dispatch<any>(fetchLogin(data))
+    const res = await dispatch(fetchLogin(data))
+    if (res.payload.msg === 'Logged in') {
+      redirect('/')
+    }
   }
 
   return (
@@ -37,7 +51,7 @@ const LoginForm = () => {
           fullWidth
         />
         <Button type="submit" size="large" fullWidth>
-          Войти
+          {isLoading ? <Spinner /> : 'Войти'}
         </Button>
       </form>
     </>

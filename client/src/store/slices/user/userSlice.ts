@@ -1,5 +1,5 @@
 import { UserState } from '@components/src/types/types'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, SerializedError, createSlice } from '@reduxjs/toolkit'
 import { fetchLogin, fetchRegister } from './userThunks'
 
 const initialState: UserState = {
@@ -47,13 +47,19 @@ const userSlice = createSlice({
         state.loading = false
         state.isAuth = true
       })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .addCase(fetchRegister.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false
-        state.error = action.payload
-      })
+      .addCase(
+        fetchRegister.rejected,
+        (
+          state,
+          action: PayloadAction<unknown, string, unknown, SerializedError> //????
+        ) => {
+          state.loading = false
+          state.error = action.error.message ?? null
+        }
+      )
       .addCase(fetchLogin.pending, (state) => {
         state.loading = true
+        state.isAuth = false
         state.error = null
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
@@ -63,6 +69,16 @@ const userSlice = createSlice({
         state.isAuth = true
         state.loading = false
       })
+      .addCase(
+        fetchLogin.rejected,
+        (
+          state,
+          action: PayloadAction<unknown, string, unknown, SerializedError> ///????
+        ) => {
+          state.loading = false
+          state.error = action.error.message ?? null
+        }
+      )
   },
 })
 
