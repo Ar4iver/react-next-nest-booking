@@ -4,14 +4,14 @@ export interface RootState {
 
 export interface AuthState {
   isAuth: boolean
-  firstName: string | null
-  lastName: string | null
+  firstname: string | null
+  lastname: string | null
   email: string | null
 }
 
 export interface UserState {
-  firstName: string | null
-  lastName: string | null
+  firstname: string | null
+  lastname: string | null
   email: string | null
   password: string | null
   isAuth: boolean

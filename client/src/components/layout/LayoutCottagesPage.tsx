@@ -7,16 +7,16 @@ interface LayoutCottagesListProps {
   children: ReactNode
 }
 
-const LayoutCottagesList = ({ children }: LayoutCottagesListProps) => {
+const LayoutCottagesPage = ({ children }: LayoutCottagesListProps) => {
   return (
     <>
       <Header />
-      <main>
-        <Container maxWidth="lg">{children}</Container>
-      </main>
+      <Container>
+        <main>{children}</main>
+      </Container>
       <Footer />
     </>
   )
 }
 
-export default LayoutCottagesList
+export default LayoutCottagesPage

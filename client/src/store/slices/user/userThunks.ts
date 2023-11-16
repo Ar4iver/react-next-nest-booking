@@ -16,6 +16,7 @@ const fetchRegister = createAsyncThunk(
 
     if (response.data.warningMessage) {
       toast.warning('Пользователь с таким Email уже существует.')
+      return
     }
 
     return response.data

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@components/src/hooks/hooks'
 import { fetchLogin } from '@components/src/store/slices/user/userThunks'
 import { showAuthError } from '@components/src/utils/errors'
 import { Button } from '@mui/material'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { FormEvent, useEffect, useState } from 'react'
 
 const LoginForm = () => {
@@ -12,6 +12,9 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const isLoading = useAppSelector((state) => state.user.loading)
   const error = useAppSelector((state) => state.user.error)
+  const isAuth = useAppSelector((state) => state.user.isAuth)
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
   useEffect(() => {
     if (error) {
@@ -21,16 +24,16 @@ const LoginForm = () => {
 
   const data = { email, password }
 
-  const dispatch = useAppDispatch()
-
-  ///??????
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const res = await dispatch(fetchLogin(data))
-    if (res.payload.msg === 'Logged in') {
-      redirect('/')
-    }
+    await dispatch(fetchLogin(data))
   }
+
+  useEffect(() => {
+    if (isAuth) {
+      router.push('/cottages')
+    }
+  }, [isAuth, router])
 
   return (
     <>
