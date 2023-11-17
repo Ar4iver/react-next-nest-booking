@@ -32,17 +32,19 @@ const CottageCard = ({ ...cottage }: ICottageProps) => {
             <div className="room-card__gallery-item" key={index}>
               <Image
                 className="room-card__gallery-item--img"
-                src={img.url}
+                src={img.url ? img.url : 'http://placehold.it/420x150/'}
+                loading="lazy"
+                fill
                 alt="cottagePhoto"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 width={0}
                 height={0}
-                layout="responsive"
               />
             </div>
           ))}
       </ImageSlider>
       <Link
-        href={`/cottages/cottage/${slugify(cottage.name, { lower: true })}`}
+        href={`/cottages/${slugify(cottage.name, { lower: true })}`}
         className="room-card__description"
       >
         <div className="room-card__description-row">

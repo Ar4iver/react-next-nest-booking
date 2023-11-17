@@ -6,10 +6,7 @@ import Link from 'next/link'
 import { useAppSelector } from '@components/src/hooks/hooks'
 
 const Header = () => {
-  const user = useAppSelector((state) => state.user.firstname)
-  const isAuth = useAppSelector((state) => state.user.isAuth)
-
-  console.log(user)
+  const user = useAppSelector((state) => state.user)
 
   return (
     <header className="header">
@@ -17,9 +14,18 @@ const Header = () => {
         <div className="header__inner">
           <Logo className="header__logo" />
           {/* <NavList routes={navigationRoutes} className="header-nav" /> */}
-          {isAuth ? (
+          {user.isAuth ? (
             <>
-              <p>Привет, {user}</p>
+              <div className="header__user-preview">
+                <Link href={`/users/${user.userId}`}>
+                  <span>
+                    Привет,{' '}
+                    <span style={{ color: 'blue', fontSize: '20px' }}>
+                      {user.firstname}!
+                    </span>
+                  </span>
+                </Link>
+              </div>
             </>
           ) : (
             <div className="header-buttons">

@@ -9,6 +9,11 @@
     box-shadow: 0 10px 20px $accent5;
     z-index: 10;
     margin-bottom: 20px;
+
+
+    &__user-preview {
+        margin-left: auto;
+    }
 }
 
 .header__inner {

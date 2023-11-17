@@ -19,8 +19,6 @@ const CottagesPage = () => {
           <section className="rooms-page__rooms">
             <div className="rooms-page__sorting">
               {/* <Searchbar value={searchTerm} onChange={handleChangeSearch} /> */}
-              <p>Тут поиск SearchBar</p>
-              <p>Тут сортировка CottagesSort</p>
               {/* <RoomsSort sortBy={sortBy} onSort={handleSort} /> */}
             </div>
             <h2 className="rooms__title">

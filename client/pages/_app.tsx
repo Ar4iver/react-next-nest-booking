@@ -8,8 +8,9 @@ import { CssBaseline } from '@mui/material'
 import '../styles/Home.module.scss'
 import store from '@components/src/store/store'
 import { type ReactElement, type ReactNode } from 'react'
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { ToastContainer } from 'react-toastify'
+import { fetchLoginCheck } from '@components/src/store/slices/user/userThunks'
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -22,6 +23,15 @@ type AppPropsWithLayout = AppProps & {
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
+
+export async function getServerSideProps(context) {
+  const cookies = context.req.headers.cookie || ''
+  await context.store.dispatch(fetchLoginCheck(cookies))
+
+  // Дополнительная логика, если необходимо
+
+  return { props: {} }
+}
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (

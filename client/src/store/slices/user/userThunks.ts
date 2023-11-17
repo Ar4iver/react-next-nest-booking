@@ -16,10 +16,11 @@ const fetchRegister = createAsyncThunk(
 
     if (response.data.warningMessage) {
       toast.warning('Пользователь с таким Email уже существует.')
-      return
+      return { error: 'User already exists' }
     }
 
-    return response.data
+    console.log(response.data)
+    return response.data ///action payload
   }
 )
 
@@ -38,8 +39,18 @@ const fetchLogin = createAsyncThunk(
       }
     )
     toast.success('Вход выполнен!')
+    console.log(response.data)
     return response.data
   }
 )
 
-export { fetchRegister, fetchLogin }
+const fetchLoginCheck = createAsyncThunk(
+  'login-check/fetchLogin',
+  async (cookies) => {
+    const user = await axios.get('http://localhost:3001/users/v1/login-check', {
+      headers: { Cookie: cookies },
+    })
+    return user
+  }
+)
+export { fetchRegister, fetchLogin, fetchLoginCheck }

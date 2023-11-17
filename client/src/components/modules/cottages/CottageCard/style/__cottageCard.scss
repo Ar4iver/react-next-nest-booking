@@ -60,6 +60,7 @@
     }
 
     &__gallery-item {
+        position: relative;
         height: 150px;
     }
 
@@ -163,7 +164,7 @@
     }
 
     .slick-dots {
-        justify-content: flex-end;
+        justify-content: center;
 
         li {
             width: 8px;

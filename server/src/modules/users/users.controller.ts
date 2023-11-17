@@ -30,8 +30,12 @@ export class UsersController {
   @Post('/v1/signup')
   @HttpCode(HttpStatus.CREATED)
   @Header('Content-type', 'application/json')
-  createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    const user = await this.userService.create(createUserDto);
+    return {
+      user: user,
+      msg: 'Registration is successful',
+    };
   }
 
   @ApiBody({ type: LoginUserRequest })

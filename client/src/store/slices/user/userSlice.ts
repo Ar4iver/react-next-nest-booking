@@ -3,6 +3,7 @@ import { PayloadAction, SerializedError, createSlice } from '@reduxjs/toolkit'
 import { fetchLogin, fetchRegister } from './userThunks'
 
 const initialState: UserState = {
+  userId: null,
   firstname: null,
   lastname: null,
   email: null,
@@ -17,6 +18,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
+      state.userId = action.payload.userId
       state.firstname = action.payload.firstname
       state.lastname = action.payload.lastname
       state.email = action.payload.email
@@ -24,6 +26,7 @@ const userSlice = createSlice({
       state.isAuth = action.payload.isAuth
     },
     removeUser(state) {
+      state.userId = null
       state.firstname = null
       state.lastname = null
       state.email = null
@@ -41,13 +44,14 @@ const userSlice = createSlice({
         state.error = null
       })
       .addCase(fetchRegister.fulfilled, (state, action) => {
-        const response = action.payload
-        console.log(response)
-        state.firstname = response.firstname
-        state.lastname = response.lastname
-        state.email = response.email
         state.loading = false
-        state.isAuth = true
+        if (action.payload && !action.payload.error) {
+          state.userId = action.payload.user.userId
+          state.firstname = action.payload.user.firstname
+          state.lastname = action.payload.user.lastname
+          state.email = action.payload.user.email
+          state.isAuth = true
+        }
       })
       .addCase(
         fetchRegister.rejected,
@@ -65,8 +69,7 @@ const userSlice = createSlice({
         state.error = null
       })
       .addCase(fetchLogin.fulfilled, (state, action) => {
-        const response = action.payload
-        console.log(response)
+        state.userId = action.payload.user.userId
         state.email = action.payload.user.email
         state.firstname = action.payload.user.firstname
         state.lastname = action.payload.user.lastname

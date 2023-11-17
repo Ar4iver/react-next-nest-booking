@@ -4,13 +4,16 @@ import Spinner from '@components/src/components/elements/Spinner/Spinner'
 import { useAppDispatch, useAppSelector } from '@components/src/hooks/hooks'
 import { fetchRegister } from '@components/src/store/slices/user/userThunks'
 import { showAuthError } from '@components/src/utils/errors'
-import React, { FormEvent, useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { FormEvent, useEffect, useState } from 'react'
 const RegisterForm = () => {
   const [firstname, setFirstName] = useState('')
   const [lastname, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const isLoading = useAppSelector((state) => state.user.loading)
+  const isAuth = useAppSelector((state) => state.user.isAuth)
+  const router = useRouter()
 
   const data = { firstname, lastname, email, password }
 
@@ -24,6 +27,12 @@ const RegisterForm = () => {
       showAuthError(error)
     }
   }
+
+  useEffect(() => {
+    if (isAuth) {
+      router.push('/cottages')
+    }
+  }, [isAuth, router])
 
   return (
     <>

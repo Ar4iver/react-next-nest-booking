@@ -10,6 +10,7 @@ export interface AuthState {
 }
 
 export interface UserState {
+  userId: string | null
   firstname: string | null
   lastname: string | null
   email: string | null

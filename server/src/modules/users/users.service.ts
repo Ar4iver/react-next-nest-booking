@@ -28,6 +28,7 @@ export class UsersService {
     }
 
     const hashedPassword = await bcrypt.hash(CreateUserDto.password, 10);
+    user.id = CreateUserDto.id;
     user.firstname = CreateUserDto.firstname;
     user.lastname = CreateUserDto.lastname;
     user.email = CreateUserDto.email;
